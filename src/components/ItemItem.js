@@ -4,7 +4,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
-
+import './item.css';
 class ItemItem extends React.Component {
 
     constructor(props) {
@@ -22,10 +22,10 @@ class ItemItem extends React.Component {
     render() {
 
         return <div id="itemlist"> <ListItem  button onClick={this.handleSelect} >
-        <ListItemText primary={this.props.value.nome}/>
+        <ListItemText  primary={this.props.value.nome}/>
         <ListItemSecondaryAction onClick={this.handleDelete}>
             <IconButton edge="end" aria-label="delete">
-                <DeleteIcon />
+                <DeleteIcon/>
             </IconButton>
         </ListItemSecondaryAction>
     </ListItem> 

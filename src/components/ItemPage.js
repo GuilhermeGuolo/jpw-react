@@ -9,22 +9,26 @@ import ListSubheader from '@material-ui/core/ListSubheader'
 import 'typeface-roboto';
 
 class ItemPage extends React.Component {
-    
+
     constructor(props) {
         super(props)
         this.BASE_URL = "http://localhost:4000/itens"
-        this.state = { itens: [],  init:0,selectedItem: undefined}
+        this.state = { itens: [], init: 0, selectedItem: undefined }
         //this.loadItens();
-        
+
     }
 
-  async componentDidMount(){
-    await axios.get(this.BASE_URL).then((response) => {
-        this.setState({ itens: response.data,  init:1 })
-    }).catch((error) => {
-        console.error(error)
-    })
-  }
+    async componentDidMount() {
+        await axios.get(this.BASE_URL).then((response) => {
+
+            this.setState({ itens: response.data, init: 1 })
+
+
+
+        }).catch((error) => {
+            console.error(error)
+        })
+    }
 
 
     handleAction = (data) => {
@@ -48,19 +52,21 @@ class ItemPage extends React.Component {
         console.log(data)
         axios.put(this.BASE_URL + "/id?id=" + id, data).then(() => {
             this.componentDidMount()
-            alert("Item atualizado com sucesso!")
+            alert("Item:" + data.nome + " atualizado com sucesso!")
         }).catch((error) => {
-            console.error(error)
+            alert("Atualização falhou. Código de erro:" + error.request.status)
         })
     }
 
     handleInsert = (data) => {
         console.log(data)
-        axios.post(this.BASE_URL, data).then(() => {
+        axios.post(this.BASE_URL, data).then((response) => {
+              alert("Item:" + data.nome + " inserido com sucesso!")
             this.componentDidMount()
-            alert("Item inserido com sucesso!")
+            
+
         }).catch((error) => {
-            console.error(error)
+            alert("Inserção falhou. Código de erro:" + error.request.status)
         })
     }
 
@@ -69,17 +75,19 @@ class ItemPage extends React.Component {
         axios.delete(this.BASE_URL + "/id?id=" + id).then(() => {
             this.componentDidMount()
             alert("Item excluído com sucesso!")
+        }).catch((error) => {
+            alert("Deleção falhou. Código de erro:" + error.request.status)
         })
         this.setState({ selectedItem: undefined })
     }
 
     render() {
 
-        if (this.state.selectedItem) {
-            var editLabel = <div>Editando {this.state.selectedItem.nome}</div>
-        } else {
-            var editLabel = "Inserindo"
-        }
+        /* if (this.state.selectedItem) {
+             var editLabel = <div>Editando {this.state.selectedItem.nome}</div>
+         } else {
+             var editLabel = "Inserindo"
+         }*/
 
         var itemList = this.state.itens.map((value) => {
             return <ItemItem
@@ -99,9 +107,9 @@ class ItemPage extends React.Component {
             peso={peso}
             raridade={raridade}
         />
- 
+
         return <div>
-            <AppBar position="static">{editLabel}</AppBar>
+
             <Grid
                 container
                 direction="row"
@@ -110,17 +118,16 @@ class ItemPage extends React.Component {
             >
                 {itemForm}
             </Grid>
-           
-                <List
-                    subheader={
-                        <ListSubheader component="div" id="nested-list-subheader">
-                            Itens
+
+            <List subheader={
+                <ListSubheader component="div" id="nested-list-subheader">
+                    Itens
                     </ListSubheader>
-                    }
-                >
-                    {itemList}
-                </List>
-        
+            }
+            >
+                {itemList}
+            </List>
+
         </div>
     }
 }
