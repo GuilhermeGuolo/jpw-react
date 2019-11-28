@@ -7,6 +7,7 @@ import AppBar from '@material-ui/core/AppBar'
 import List from '@material-ui/core/List'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import 'typeface-roboto';
+import { message } from 'antd'
 
 class BolsaPage extends React.Component {
     
@@ -48,9 +49,9 @@ class BolsaPage extends React.Component {
         console.log(data)
         axios.put(this.BASE_URL + "/id?id=" + id, data).then(() => {
             this.componentDidMount()
-            alert("Bolsa atualizada com sucesso!")
+            message.info("Bolsa atualizada com sucesso!")
         }).catch((error) => {
-            console.error(error)
+            message.error('Atualização falhou. Error:' + error.request.status)
         })
     }
 
@@ -58,10 +59,10 @@ class BolsaPage extends React.Component {
         console.log(data)
         axios.post(this.BASE_URL, data).then(() => {
             this.componentDidMount()
-            alert("Bolsa inserida com sucesso!")
+            message.info("Bolsa inserida com sucesso!")
         }).catch((error) => {
             
-            console.error(error)
+            message.error("Inserção falhou. Código de erro:" + error.request.status)
         })
     }
 
@@ -69,18 +70,16 @@ class BolsaPage extends React.Component {
         console.log(id)
         axios.delete(this.BASE_URL + "/id?id=" + id).then(() => {
             this.componentDidMount()
-            alert("Bolsa excluída com sucesso!")
+            message.info("Bolsa excluída com sucesso!")
+        }).catch((error) =>{
+            message.error("Deleção falhou. Código de erro:" + error.request.status)
         })
         this.setState({ selectedItem: undefined })
     }
 
     render() {
 
-        if (this.state.selectedItem) {
-            var editLabel = <div>Editando {this.state.selectedItem.nome}</div>
-        } else {
-            var editLabel = "Inserindo"
-        }
+
 
         var bolsaList = this.state.bolsas.map((value) => {
             return <BolsaItem
@@ -102,7 +101,7 @@ class BolsaPage extends React.Component {
         />
  
         return <div>
-            <AppBar position="static">{editLabel}</AppBar>
+            <AppBar position="static"></AppBar>
             <Grid
                 container
                 direction="row"

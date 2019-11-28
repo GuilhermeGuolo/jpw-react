@@ -4,6 +4,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
+import './item.css';
 
 class MapaItem extends React.Component {
 
@@ -21,7 +22,7 @@ class MapaItem extends React.Component {
 
     render() {
 
-        return <ListItem  button onClick={this.handleSelect} >
+        return <ListItem className="itemlist"  button onClick={this.handleSelect} >
         <ListItemText primary={this.props.value.nome}/>
         <ListItemSecondaryAction onClick={this.handleDelete}>
             <IconButton edge="end" aria-label="delete">

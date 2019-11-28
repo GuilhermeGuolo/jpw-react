@@ -7,6 +7,7 @@ import AppBar from '@material-ui/core/AppBar'
 import List from '@material-ui/core/List'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import 'typeface-roboto';
+import { message } from 'antd'
 
 class InventarioPage extends React.Component {
     
@@ -48,9 +49,9 @@ class InventarioPage extends React.Component {
         console.log(data)
         axios.put(this.BASE_URL + "/id?id=" + id, data).then(() => {
             this.componentDidMount()
-            alert("Inventario atualizado com sucesso!")
+            message.info("Inventario atualizado com sucesso!")
         }).catch((error) => {
-            console.error(error)
+            message.error('Atualização falhou. Erro:' + error.request.status)
         })
     }
 
@@ -58,10 +59,10 @@ class InventarioPage extends React.Component {
         console.log(data)
         axios.post(this.BASE_URL, data).then(() => {
             this.componentDidMount()
-            alert("Inventario inserido com sucesso!")
+            message.info("Inventario inserido com sucesso!")
         }).catch((error) => {
             
-            console.error(error)
+            message.error("Inserção falhou. Código de erro:" + error.request.status)
         })
     }
 
@@ -69,18 +70,16 @@ class InventarioPage extends React.Component {
         console.log(id)
         axios.delete(this.BASE_URL + "/id?id=" + id).then(() => {
             this.componentDidMount()
-            alert("Inventario excluído com sucesso!")
+            message.info("Inventario excluído com sucesso!")
+        }).catch((error) =>{
+            message.error("Deleção falhou. Código de erro:" + error.request.status)
         })
         this.setState({ selectedItem: undefined })
     }
 
     render() {
 
-        if (this.state.selectedItem) {
-            var editLabel = <div>Editando {this.state.selectedItem.nome}</div>
-        } else {
-            var editLabel = "Inserindo"
-        }
+   
 
         var inventarioList = this.state.inventarios.map((value) => {
             return <InventarioItem
@@ -104,7 +103,7 @@ class InventarioPage extends React.Component {
         />
  
         return <div>
-            <AppBar position="static">{editLabel}</AppBar>
+            <AppBar position="static"></AppBar>
             <Grid
                 container
                 direction="row"

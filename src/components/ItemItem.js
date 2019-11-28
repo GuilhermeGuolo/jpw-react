@@ -21,7 +21,7 @@ class ItemItem extends React.Component {
 
     render() {
 
-        return <div id="itemlist"> <ListItem  button onClick={this.handleSelect} >
+        return <div className="itemlist"> <ListItem  button onClick={this.handleSelect} >
         <ListItemText  primary={this.props.value.nome}/>
         <ListItemSecondaryAction onClick={this.handleDelete}>
             <IconButton edge="end" aria-label="delete">

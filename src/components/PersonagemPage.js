@@ -5,6 +5,7 @@ import PersonagemForm from './PersonagemForm'
 import Grid from '@material-ui/core/Grid'
 import AppBar from '@material-ui/core/AppBar'
 import List from '@material-ui/core/List'
+import { message, Button } from 'antd';
 import ListSubheader from '@material-ui/core/ListSubheader'
 import 'typeface-roboto';
 
@@ -14,7 +15,6 @@ class PersonagemPage extends React.Component {
         super(props)
         this.BASE_URL = "http://localhost:4000/personagens"
         this.state = { personagens: [],  init:0,selectedItem: undefined}
-        //this.loadItens();
         
     }
 
@@ -48,20 +48,21 @@ class PersonagemPage extends React.Component {
         console.log(data)
         axios.put(this.BASE_URL + "/id?id=" + id, data).then(() => {
             this.componentDidMount()
-            alert("Personagem atualizado com sucesso!")
+            message.info("Personagem atualizado com sucesso!")
         }).catch((error) => {
-            console.error(error)
+            message.error('Atualização falhou. Erro:' + error.request.status)
         })
     }
 
     handleInsert = (data) => {
         console.log(data)
         axios.post(this.BASE_URL, data).then(() => {
+            message.info("Personagem inserido com sucesso!")
             this.componentDidMount()
-            alert("Personagem inserido com sucesso!")
+           
         }).catch((error) => {
             
-            console.error(error)
+            message.error("Inserção falhou. Código de erro:" + error.request.status)
         })
     }
 
@@ -69,18 +70,16 @@ class PersonagemPage extends React.Component {
         console.log(id)
         axios.delete(this.BASE_URL + "/id?id=" + id).then(() => {
             this.componentDidMount()
-            alert("Personagem excluído com sucesso!")
+            message.info("Personagem excluído com sucesso!")
+        }).catch((error) =>{
+            message.error("Deleção falhou. Código de erro:" + error.request.status)
         })
         this.setState({ selectedItem: undefined })
     }
 
     render() {
 
-        if (this.state.selectedItem) {
-            var editLabel = <div>Editando {this.state.selectedItem.nome}</div>
-        } else {
-            var editLabel = "Inserindo"
-        }
+
 
         var personagemList = this.state.personagens.map((value) => {
             return <PersonagemItem
@@ -104,7 +103,7 @@ class PersonagemPage extends React.Component {
         />
  
         return <div>
-            <AppBar position="static">{editLabel}</AppBar>
+            <AppBar position="static"></AppBar>
             <Grid
                 container
                 direction="row"

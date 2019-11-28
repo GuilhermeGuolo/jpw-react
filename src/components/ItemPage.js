@@ -3,6 +3,7 @@ import axios from 'axios'
 import ItemItem from './ItemItem'
 import ItemForm from './ItemForm'
 import Grid from '@material-ui/core/Grid'
+import { message, Button } from 'antd';
 import AppBar from '@material-ui/core/AppBar'
 import List from '@material-ui/core/List'
 import ListSubheader from '@material-ui/core/ListSubheader'
@@ -52,21 +53,22 @@ class ItemPage extends React.Component {
         console.log(data)
         axios.put(this.BASE_URL + "/id?id=" + id, data).then(() => {
             this.componentDidMount()
-            alert("Item:" + data.nome + " atualizado com sucesso!")
+            message.info("Item:" + data.nome + " atualizado com sucesso!")
         }).catch((error) => {
-            alert("Atualização falhou. Código de erro:" + error.request.status)
+            message.error("Atualização falhou. Código de erro:" + error.request.status)
         })
     }
 
     handleInsert = (data) => {
         console.log(data)
         axios.post(this.BASE_URL, data).then((response) => {
-              alert("Item:" + data.nome + " inserido com sucesso!")
+              message.info("Item:" + data.nome + " inserido com sucesso!")
             this.componentDidMount()
             
 
         }).catch((error) => {
-            alert("Inserção falhou. Código de erro:" + error.request.status)
+            message.error('Inserção falhou. Código de erro:' + error.request.status );
+            
         })
     }
 
@@ -74,9 +76,9 @@ class ItemPage extends React.Component {
         console.log(id)
         axios.delete(this.BASE_URL + "/id?id=" + id).then(() => {
             this.componentDidMount()
-            alert("Item excluído com sucesso!")
+            message.info("Item excluído com sucesso!")
         }).catch((error) => {
-            alert("Deleção falhou. Código de erro:" + error.request.status)
+            message.error("Deleção falhou. Código de erro:" + error.request.status)
         })
         this.setState({ selectedItem: undefined })
     }

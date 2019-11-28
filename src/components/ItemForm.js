@@ -56,7 +56,7 @@ class ItemForm extends React.Component {
 
         </div>
         <div>
-        <Button color="primary" onClick={this.handleClick}>Salvar</Button>
+        <Button color="green" onClick={this.handleClick}>Salvar</Button>
         </div>
     </form> 
      
